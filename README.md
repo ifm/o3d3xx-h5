@@ -8,15 +8,15 @@ header information available in `o3d3xx-ros`. This package can act as a
 more capable replacement for the `o3d3xx-ros/file_writer` node. Features
 include:
 
-    * Data are logged to high-performance HDF5 data store
-    * Data are annotated with current camera parameters
-    * The nature of using HDF5 implicitly provides compatibility with leading
-      analysis packages like MATLAB and the scientific Python stack -- most of
-      which have strong support for HDF5
-    * All data lives in a single file (yet organized as a "filesystem in a
-      file")
-    * Parameterization is available to provide an on-disk ring buffer for fixed
-      size data capture and usage on production systems
+* Data are logged to high-performance HDF5 data store
+* Data are annotated with current camera parameters
+* The nature of using HDF5 implicitly provides compatibility with leading
+  analysis packages like MATLAB and the scientific Python stack -- most of
+  which have strong support for HDF5
+* All data lives in a single file (yet organized as a "filesystem in a
+  file")
+* Parameterization is available to provide an on-disk ring buffer for fixed
+  size data capture and usage on production systems
 
 
 Software Compatibility Matrix
