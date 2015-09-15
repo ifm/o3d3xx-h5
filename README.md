@@ -252,3 +252,18 @@ their data out to the HDF5 output file. This node is started with:
         </td>
     </tr>
 </table>
+
+TODO
+----
+
+Please see the [Github Issues](https://github.com/lovepark/o3d3xx-h5/issues).
+
+LICENSE
+-------
+
+Please see the file called LICENSE
+
+AUTHORS
+-------
+
+[Tom Panzarella](mailto:tom@loveparkrobotics.com)
