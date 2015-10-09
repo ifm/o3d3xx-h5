@@ -74,8 +74,8 @@ class H5Writer(object):
         self.depth_grp_str_ = rospy.resolve_name("/depth")
         self.amplitude_grp_str_ = rospy.resolve_name("/amplitude")
         self.confidence_grp_str_ = rospy.resolve_name("/confidence")
-        self.xyzi_grp_str_ = rospy.resolve_name("/xyzi_image")
-        self.xyzi_grp_str_ = self.xyzi_grp_str_.replace("_image", "")
+        self.xyz_grp_str_ = rospy.resolve_name("/xyz_image")
+        self.xyz_grp_str_ = self.xyz_grp_str_.replace("_image", "")
 
         # create or fetch the groups
         try:
@@ -99,11 +99,11 @@ class H5Writer(object):
                 self.h5_.create_group(self.confidence_grp_str_)
 
         try:
-            self.xyzi_grp_ = self.h5_[self.xyzi_grp_str_]
+            self.xyz_grp_ = self.h5_[self.xyz_grp_str_]
         except KeyError:
-            rospy.loginfo("Creating group: %s" % self.xyzi_grp_str_)
-            self.xyzi_grp_ = \
-              self.h5_.create_group(self.xyzi_grp_str_)
+            rospy.loginfo("Creating group: %s" % self.xyz_grp_str_)
+            self.xyz_grp_ = \
+              self.h5_.create_group(self.xyz_grp_str_)
 
         #----------------------
         # Create some counters for correlating different image types to
@@ -117,15 +117,15 @@ class H5Writer(object):
                        "confidence_lock": threading.Lock(),
                        "amplitude": 0,
                        "amplitude_lock": threading.Lock(),
-                       "xyzi": 0,
-                       "xyzi_lock": threading.Lock()
+                       "xyz": 0,
+                       "xyz_lock": threading.Lock()
                       }
 
         self.ds_name_ = {
                           "depth": self.depth_grp_str_,
                           "confidence": self.confidence_grp_str_,
                           "amplitude": self.amplitude_grp_str_,
-                          "xyzi": self.xyzi_grp_str_,
+                          "xyz": self.xyz_grp_str_,
                         }
 
         # initialize counters (mostly applies for when opening in 'a' mode)
@@ -152,13 +152,13 @@ class H5Writer(object):
             self.count_["confidence"] = 0
 
         try:
-            self.count_["xyzi"] = \
-                int(sorted(self.xyzi_grp_.keys())[-1])+1
-            self.count_["xyzi"] %= self.circular_buffer_sz_
+            self.count_["xyz"] = \
+                int(sorted(self.xyz_grp_.keys())[-1])+1
+            self.count_["xyz"] %= self.circular_buffer_sz_
         except:
-            self.count_["xyzi"] = 0
+            self.count_["xyz"] = 0
 
-        for t in ["depth", "amplitude", "confidence", "xyzi"]:
+        for t in ["depth", "amplitude", "confidence", "xyz"]:
             rospy.loginfo("Initial %s data: %09d" % \
                           (t, self.count_[t]))
 
@@ -190,10 +190,10 @@ class H5Writer(object):
                            queue_size=None,
                            callback_args="amplitude")
 
-        self.xyzi_sub_ = \
-          rospy.Subscriber("/xyzi_image", Image, self.image_cb,
+        self.xyz_sub_ = \
+          rospy.Subscriber("/xyz_image", Image, self.image_cb,
                            queue_size=None,
-                           callback_args="xyzi")
+                           callback_args="xyz")
 
     def set_group_attrs(self):
         """

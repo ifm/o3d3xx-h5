@@ -33,8 +33,8 @@
         output="screen">
 
     <!-- Subscribed topics/services -->
-    <remap from="/xyzi_image"
-           to="/$(arg camera_ns)/$(arg camera_nn)/xyzi_image$(arg suffix)"/>
+    <remap from="/xyz_image"
+           to="/$(arg camera_ns)/$(arg camera_nn)/xyz_image$(arg suffix)"/>
 
     <remap from="/amplitude"
            to="/$(arg camera_ns)/$(arg camera_nn)/amplitude$(arg suffix)"/>

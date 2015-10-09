@@ -148,10 +148,10 @@ their data out to the HDF5 output file. This node is started with:
     </tr>
 
     <tr>
-        <td>/o3d3xx/camera/xyzi_image</td>
+        <td>/o3d3xx/camera/xyz_image</td>
         <td>sensor_msgs/Image</td>
         <td>Data received on this topic are written to
-            the HDF5 group: `/o3d3xx/camera/xyzi_image/XXX`
+            the HDF5 group: `/o3d3xx/camera/xyz_image/XXX`
             where `XXX` is a monotonically increasing integer
             value that may or may not wrap back on intself
             depending upon the size of the circular buffer.
