@@ -24,9 +24,14 @@ Software Compatibility Matrix
 -----------------------------
 <table>
     <tr>
-        <th>o3d3xx-ros Version</th>
         <th>o3d3xx-h5 Version</th>
+        <th>o3d3xx-ros Version</th>
         <th>ROS Distribution</th>
+    </tr>
+    <tr>
+        <td>0.1.1</td>
+        <td>0.1.5</td>
+        <td>Indigo</td>
     </tr>
 </table>
 
