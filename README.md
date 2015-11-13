@@ -33,6 +33,11 @@ Software Compatibility Matrix
         <td>0.1.5</td>
         <td>Indigo</td>
     </tr>
+    <tr>
+        <td>0.1.2</td>
+        <td>0.1.7</td>
+        <td>Indigo</td>
+    </tr>
 </table>
 
 Prerequisites
@@ -124,6 +129,17 @@ their data out to the HDF5 output file. This node is started with:
         <td>sensor_msgs/Image</td>
         <td>Data received on this topic are written to
             the HDF5 group: `/o3d3xx/camera/amplitude/XXX`
+            where `XXX` is a monotonically increasing integer
+            value that may or may not wrap back on intself
+            depending upon the size of the circular buffer.
+        </td>
+    </tr>
+
+    <tr>
+        <td>/o3d3xx/camera/raw_amplitude</td>
+        <td>sensor_msgs/Image</td>
+        <td>Data received on this topic are written to
+            the HDF5 group: `/o3d3xx/camera/raw_amplitude/XXX`
             where `XXX` is a monotonically increasing integer
             value that may or may not wrap back on intself
             depending upon the size of the circular buffer.

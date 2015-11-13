@@ -39,6 +39,9 @@
     <remap from="/amplitude"
            to="/$(arg camera_ns)/$(arg camera_nn)/amplitude$(arg suffix)"/>
 
+    <remap from="/raw_amplitude"
+           to="/$(arg camera_ns)/$(arg camera_nn)/raw_amplitude$(arg suffix)"/>
+
     <remap from="/depth"
            to="/$(arg camera_ns)/$(arg camera_nn)/depth$(arg suffix)"/>
 

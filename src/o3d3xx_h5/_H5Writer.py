@@ -73,6 +73,7 @@ class H5Writer(object):
         # create group names based on the topics we will subscribe to
         self.depth_grp_str_ = rospy.resolve_name("/depth")
         self.amplitude_grp_str_ = rospy.resolve_name("/amplitude")
+        self.raw_amplitude_grp_str_ = rospy.resolve_name("/raw_amplitude")
         self.confidence_grp_str_ = rospy.resolve_name("/confidence")
         self.xyz_grp_str_ = rospy.resolve_name("/xyz_image")
         self.xyz_grp_str_ = self.xyz_grp_str_.replace("_image", "")
@@ -90,6 +91,13 @@ class H5Writer(object):
             rospy.loginfo("Creating group: %s" % self.amplitude_grp_str_)
             self.amplitude_grp_ = \
                 self.h5_.create_group(self.amplitude_grp_str_)
+
+        try:
+            self.raw_amplitude_grp_ = self.h5_[self.raw_amplitude_grp_str_]
+        except KeyError:
+            rospy.loginfo("Creating group: %s" % self.raw_amplitude_grp_str_)
+            self.raw_amplitude_grp_ = \
+                self.h5_.create_group(self.raw_amplitude_grp_str_)
 
         try:
             self.confidence_grp_ = self.h5_[self.confidence_grp_str_]
@@ -117,6 +125,8 @@ class H5Writer(object):
                        "confidence_lock": threading.Lock(),
                        "amplitude": 0,
                        "amplitude_lock": threading.Lock(),
+                       "raw_amplitude": 0,
+                       "raw_amplitude_lock": threading.Lock(),
                        "xyz": 0,
                        "xyz_lock": threading.Lock()
                       }
@@ -125,6 +135,7 @@ class H5Writer(object):
                           "depth": self.depth_grp_str_,
                           "confidence": self.confidence_grp_str_,
                           "amplitude": self.amplitude_grp_str_,
+                          "raw_amplitude": self.raw_amplitude_grp_str_,
                           "xyz": self.xyz_grp_str_,
                         }
 
@@ -145,6 +156,13 @@ class H5Writer(object):
             self.count_["amplitude"] = 0
 
         try:
+            self.count_["raw_amplitude"] = \
+                int(sorted(self.raw_amplitude_grp_.keys())[-1])+1
+            self.count_["raw_amplitude"] %= self.circular_buffer_sz_
+        except:
+            self.count_["raw_amplitude"] = 0
+
+        try:
             self.count_["confidence"] = \
                 int(sorted(self.confidence_grp_.keys())[-1])+1
             self.count_["confidence"] %= self.circular_buffer_sz_
@@ -158,7 +176,7 @@ class H5Writer(object):
         except:
             self.count_["xyz"] = 0
 
-        for t in ["depth", "amplitude", "confidence", "xyz"]:
+        for t in ["depth", "amplitude", "raw_amplitude", "confidence", "xyz"]:
             rospy.loginfo("Initial %s data: %09d" % \
                           (t, self.count_[t]))
 
@@ -189,6 +207,11 @@ class H5Writer(object):
           rospy.Subscriber("/amplitude", Image, self.image_cb,
                            queue_size=None,
                            callback_args="amplitude")
+
+        self.raw_amplitude_sub_ = \
+          rospy.Subscriber("/raw_amplitude", Image, self.image_cb,
+                           queue_size=None,
+                           callback_args="raw_amplitude")
 
         self.xyz_sub_ = \
           rospy.Subscriber("/xyz_image", Image, self.image_cb,
