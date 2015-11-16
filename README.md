@@ -121,7 +121,7 @@ their data out to the HDF5 output file. This node is started with:
     <tr>
         <th>Topic</th>
         <th>Message</th>
-        <Description</th>
+        <th><Description</th>
     </tr>
 
     <tr>
