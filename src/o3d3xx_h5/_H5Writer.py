@@ -46,6 +46,7 @@ class H5Writer(object):
         self.compression_ = rospy.get_param("~compression", 9)
         self.circular_buffer_sz_ = \
           rospy.get_param("~circular_buffer_sz", 999999999)
+        self.dump_service_timeout_ = rospy.get_param("~dump_service_timeout")
 
         #----------------------
         # Initialize our output file
@@ -185,7 +186,11 @@ class H5Writer(object):
         # camera and parsing the JSON
         #----------------------
 
-        self.set_group_attrs()
+        try:
+            self.set_group_attrs()
+        except rospy.exceptions.ROSException as ex:
+            rospy.logwarn(str(ex))
+            rospy.logwarn("Group attributes will not be set!")
 
         #----------------------
         # Subscribed topics
@@ -224,7 +229,7 @@ class H5Writer(object):
         camera configuration.
         """
         rospy.loginfo("Calling `Dump` service...")
-        rospy.wait_for_service("/Dump")
+        rospy.wait_for_service("/Dump", timeout=self.dump_service_timeout_)
         dump_srv = rospy.ServiceProxy("/Dump", Dump)
         resp = dump_srv()
         json = simplejson.loads(resp.config)

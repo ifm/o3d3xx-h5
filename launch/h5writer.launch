@@ -22,6 +22,12 @@
   -->
   <arg name="circular_buffer_sz" default="999999999"/>
 
+  <!--
+       Number of seconds to wait before timing out when calling the camera Dump
+       service.
+  -->
+  <arg name="dump_service_timeout" default="1.0"/>
+
   <arg name="camera_ns" default="o3d3xx"/>
   <arg name="camera_nn" default="camera"/>
   <arg name="suffix" default=""/>
@@ -57,6 +63,7 @@
     <param name="open_mode" value="$(arg open_mode)"/>
     <param name="compression" value="$(arg compression)"/>
     <param name="circular_buffer_sz" value="$(arg circular_buffer_sz)"/>
+    <param name="dump_service_timeout" value="$(arg dump_service_timeout)"/>
 
   </node>
 

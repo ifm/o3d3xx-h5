@@ -38,6 +38,11 @@ Software Compatibility Matrix
         <td>0.1.7</td>
         <td>Indigo</td>
     </tr>
+    <tr>
+        <td>0.1.3</td>
+        <td>0.1.7</td>
+        <td>Indigo</td>
+    </tr>
 </table>
 
 Prerequisites
